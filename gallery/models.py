@@ -2,7 +2,6 @@ from django.db import models
 
 from content.models import ModelBase
 
-
 class Gallery(ModelBase):
     class Meta():
         verbose_name = "Gallery"
