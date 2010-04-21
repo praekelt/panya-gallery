@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load gallery_inclusion_tags %} 
+
+{% block content %}
+    <div class="page section_galleries">
+	    <div class="title">
+		    <h1>{{ title }}</h1>
+		</div><!--/title-->
+
+        {{ filter %}
+        {% gallery_listing object_list %}
+        {{ paging %}
+	</div><!--/page-->
+{% endblock %}
