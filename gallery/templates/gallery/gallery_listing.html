@@ -2,5 +2,13 @@
 {% load gallery_inclusion_tags %} 
 
 {% block content %}
-    {% gallery_listing object_list %}
+    <div class="page section_galleries">
+	    <div class="title">
+		    <h1>Galleries</h1>
+		</div><!--/title-->
+
+        {{ filter %}
+        {% gallery_listing object_list %}
+        {{ paging %}
+	</div><!--/page-->
 {% endblock %}
