@@ -1,12 +1,20 @@
-from django.views.generic import list_detail
+from content.generic.views import GenericObjectDetail, GenericObjectList 
 from gallery.models import Gallery
 
-def object_listing(request):
-    return list_detail.object_list(
-        request,
-        queryset = Gallery.permitted.all(),
-        template_name = 'gallery/gallery_listing.html'
-    )
+class ObjectList(GenericObjectList):
+    def get_queryset(self):
+        return Gallery.permitted.all()
 
-def object_detail(request):
-    pass
+    def get_extra_context(self):
+        return {'title': 'Galleries'}
+
+object_list = ObjectList()
+
+class ObjectDetail(GenericObjectDetail):
+    def get_queryset(self):
+        return Gallery.permitted.all()
+    
+    def get_extra_context(self):
+        return {'title': 'Galleries'}
+
+object_detail = ObjectDetail()
