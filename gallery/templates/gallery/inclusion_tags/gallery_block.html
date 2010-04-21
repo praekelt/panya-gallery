@@ -1,6 +1,7 @@
-{% load comments %}
+{% load comments voting_tags %}
 
 {% get_comment_count for object as comment_count %}
+{% score_for_object object as score %}
 
 <div class="block is_gallery">
     <a href="{{ object.get_absolute_url }}">
@@ -13,6 +14,6 @@
 	<p class="meta">{{ object.description }}</p>
 	<div class="hidden">
 	    <p><a href="{{ object.get_absolute_url }}">{{ object.item_count }} Photos</a></p>
-		<p class="meta"><span class="meta_likes">24 Likes</span><a href="/galleries-detail.html#comments">{{ comment_count }} Comments</a></p>
+		<p class="meta"><span class="meta_likes">{{ score.score }} Likes</span><a href="{{ object.get_absolute_url }}#comments">{{ comment_count }} Comments</a></p>
 	</div>
 </div><!--/block-->
