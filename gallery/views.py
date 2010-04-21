@@ -7,3 +7,6 @@ def object_listing(request):
         queryset = Gallery.permitted.all(),
         template_name = 'gallery/gallery_listing.html'
     )
+
+def object_detail(request):
+    pass
