@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load gallery_inclusion_tags %} 
+{% load content_template_tags gallery_inclusion_tags %} 
 
 {% block content %}
     <div class="page section_galleries">
@@ -7,8 +7,21 @@
 		    <h1>{{ title }}</h1>
 		</div><!--/title-->
 
-        {{ filter %}
+        {% comment %}this should be converted to an inclusion tag{% endcomment %}
+        <div class="menu">
+		    <ul>
+                {% for field in filterset.form %}
+                    {% for choice in field.field.choices %}
+    			        <li{% if choice.0 in request.GET.values %} class="on"{% endif %}>
+                        <span>
+                        </span>
+                        <a href="{% smart_query_string field.name choice.0%}">{{ choice.1 }}</a><span></span></li>
+                    {% endfor %}
+                {% endfor %}
+			</ul>
+		</div><!--/menu-->
+        {% comment %}this should be converted to an inclusion tag{% endcomment %}
+
         {% gallery_listing object_list %}
-        {{ paging %}
 	</div><!--/page-->
 {% endblock %}
