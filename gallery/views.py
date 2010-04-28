@@ -1,11 +1,8 @@
+from content.filters import IntervalOrderFilterSet
 from content.generic.views import GenericObjectDetail, GenericObjectList 
 from gallery.models import Gallery
 
 class ObjectList(GenericObjectList):
-    def get_queryset(self):
-        
-        return Gallery.permitted.all()
-
     def get_extra_context(self, *args, **kwargs):
         extra_context = super(ObjectList, self).get_extra_context(*args, **kwargs)
         added_context = {'title': 'Galleries'}
@@ -17,6 +14,15 @@ class ObjectList(GenericObjectList):
             extra_context = added_context
 
         return extra_context
+    
+    def get_filterset(self, request, queryset):
+        return IntervalOrderFilterSet(request.GET, queryset=queryset)
+    
+    def get_paginate_by(self):
+        return 12
+    
+    def get_queryset(self):
+        return Gallery.permitted.all()
 
 object_list = ObjectList()
 
