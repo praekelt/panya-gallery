@@ -25,6 +25,29 @@ def generate():
             },
         })
 
+    # gen gallery images
+    for i in range(1, (GALLERY_COUNT * 10)):
+        objects.append({
+            "model": "gallery.GalleryImage",
+            "fields": {
+                "title": "Gallery Image %s Title" % i,
+                "state": "published",
+                "gallery": {
+                    "model": "gallery.Gallery",
+                    "fields": { 
+                        "title": "Gallery %s Title" % (i / 10 + 1)
+                    }
+                },
+                "image": random.sample(IMAGES, 1)[0],
+                "sites": {
+                    "model": "sites.Site",
+                    "fields": { 
+                        "name": "example.com"
+                    }
+                },
+            },
+        })
+
     # gen gallery photo sizes
     objects.append({
         "model": "photologue.PhotoSize",
