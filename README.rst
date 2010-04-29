@@ -4,6 +4,7 @@ Django Gallery
 
 Views
 =====
+
 object_list::
 
     views.object_list
@@ -20,7 +21,7 @@ Enable in your templates with the {% load gallery_inclusion_tags %} tag.
 
 gallery_listing
 ~~~~~~~~~~~~~~~
-Outputs gallery listing for provided galleries. Renders block template for each gallery *gallery/inclusion_tags/gallery_block.html*
+Outputs gallery listing for provided galleries. Renders block template for each gallery: *gallery/inclusion_tags/gallery_block.html*
 
 Arguments: list of gallery objects to render 
 
