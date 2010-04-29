@@ -13,6 +13,9 @@ class Gallery(ModelBase):
     
     def get_absolute_url(self):
         return reverse('gallery_object_detail', kwargs={'slug': self.slug})
+
+    def __unicode__(self):
+        return self.title
     
 class GalleryItem(ModelBase):
     gallery = models.ForeignKey(
