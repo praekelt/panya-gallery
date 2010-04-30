@@ -16,6 +16,9 @@ class Gallery(ModelBase):
 
     def __unicode__(self):
         return self.title
+
+    def get_items(self):
+        return GalleryItem.permitted.filter(gallery=self).order_by('created')
     
 class GalleryItem(ModelBase):
     gallery = models.ForeignKey(
