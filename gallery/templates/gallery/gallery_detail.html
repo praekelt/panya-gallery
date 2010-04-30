@@ -1,11 +1,23 @@
 {% extends "base.html" %}
-{% load gallery_inclusion_tags %} 
+{% load content_inclusion_tags gallery_inclusion_tags %} 
+
+{% block head %}
+	<script type="text/javascript" src="/media/radio2000/includes/gallery.js"></script>
+{% endblock %}
 
 {% block content %}
     <div class="page section_galleries">
 	    <div class="title">
 		    <h1>{{ title }}</h1>
 		</div><!--/title-->
+        
+        {% filter_menu filterset %}
+
+        {% object_header object %}
+        
         {% gallery_detail object %}
+
+        {% object_comments object %}
+
 	</div><!--/page-->
 {% endblock %}
