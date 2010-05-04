@@ -2,12 +2,12 @@ import random
 
 from django.conf import settings
 
-from generate import IMAGES
+from generate import IMAGES, VIDEOS
 from generate.json_loader import load_json
 
 GALLERY_COUNT = 20
 
-def generate_debug_true():
+def generate():
     objects = []
 
     # gen gallery objects
@@ -27,7 +27,7 @@ def generate_debug_true():
             },
         })
     # gen gallery content
-    for i in range(1, (GALLERY_COUNT * 5)):
+    for i in range(1, (GALLERY_COUNT * 3)):
         objects.append({
             "model": "gallery.GalleryImage",
             "fields": {
@@ -36,7 +36,7 @@ def generate_debug_true():
                 "gallery": {
                     "model": "gallery.Gallery",
                     "fields": { 
-                        "title": "Gallery %s Title" % (i / 5 + 1)
+                        "title": "Gallery %s Title" % (i / 3 + 1)
                     }
                 },
                 "image": random.sample(IMAGES, 1)[0],
@@ -57,7 +57,7 @@ def generate_debug_true():
                 "gallery": {
                     "model": "gallery.Gallery",
                     "fields": { 
-                        "title": "Gallery %s Title" % (i / 5 + 1)
+                        "title": "Gallery %s Title" % (i / 3 + 1)
                     }
                 },
                 "image": random.sample(IMAGES, 1)[0],
@@ -69,58 +69,28 @@ def generate_debug_true():
                 },
             },
         })
-    
-    return objects
-    
-def generate_debug_false():
-    objects = []
+        objects.append({
+            "model": "gallery.VideoFile",
+            "fields": {
+                "title": "Video File %s Title" % i,
+                "state": "published",
+                "file": random.sample(VIDEOS, 1)[0],
+                "gallery": {
+                    "model": "gallery.Gallery",
+                    "fields": { 
+                        "title": "Gallery %s Title" % (i / 3 + 1)
+                    }
+                },
+                "image": random.sample(IMAGES, 1)[0],
+                "sites": {
+                    "model": "sites.Site",
+                    "fields": { 
+                        "name": "example.com"
+                    }
+                },
+            },
+        })
 
-    # gen gallery photo sizes
-    objects.append({
-        "model": "photologue.PhotoSize",
-        "fields": {
-            "name": "gallery_gallery_block",
-            "width": "188",
-            "height": "104",
-            "crop": True,
-            "upscale": True,
-        },
-    })
-
-    # gen gallery image photo sizes
-    objects.append({
-        "model": "photologue.PhotoSize",
-        "fields": {
-            "name": "gallery_galleryimage_thumbnail",
-            "width": "60",
-            "height": "60",
-            "crop": True,
-            "upscale": True,
-        },
-    })
-    objects.append({
-        "model": "photologue.PhotoSize",
-        "fields": {
-            "name": "gallery_galleryimage_large",
-            "width": "606",
-            "height": "0",
-        },
-    })
-    objects.append({
-        "model": "photologue.PhotoSize",
-        "fields": {
-            "name": "block",
-            "width": "188",
-            "height": "40",
-        },
-    })
-
-    return objects
-    
-def generate():
-    objects = generate_debug_false()
-    if settings.DEBUG:
-        objects += generate_debug_true()
     
     load_json(objects)
     
