@@ -1,11 +1,13 @@
 import random
 
+from django.conf import settings
+
 from generate import IMAGES
 from generate.json_loader import load_json
 
 GALLERY_COUNT = 20
 
-def generate():
+def generate_debug_true():
     objects = []
 
     # gen gallery objects
@@ -67,12 +69,29 @@ def generate():
                 },
             },
         })
+    
+    return objects
+    
+def generate_debug_false():
+    objects = []
 
     # gen gallery photo sizes
     objects.append({
         "model": "photologue.PhotoSize",
         "fields": {
-            "name": "gallery_small",
+            "name": "gallery_gallery_block",
+            "width": "188",
+            "height": "104",
+            "crop": True,
+            "upscale": True,
+        },
+    })
+
+    # gen gallery image photo sizes
+    objects.append({
+        "model": "photologue.PhotoSize",
+        "fields": {
+            "name": "gallery_galleryimage_thumbnail",
             "width": "60",
             "height": "60",
             "crop": True,
@@ -82,24 +101,29 @@ def generate():
     objects.append({
         "model": "photologue.PhotoSize",
         "fields": {
-            "name": "gallery_medium",
-            "width": "188",
-            "height": "104",
-            "crop": True,
-            "upscale": True,
+            "name": "gallery_galleryimage_large",
+            "width": "606",
+            "height": "0",
         },
     })
     objects.append({
         "model": "photologue.PhotoSize",
         "fields": {
-            "name": "gallery_large",
-            "width": "606",
-            "height": "0",
+            "name": "block",
+            "width": "188",
+            "height": "40",
         },
     })
+
+    return objects
+    
+def generate():
+    objects = generate_debug_false()
+    if settings.DEBUG:
+        objects += generate_debug_true()
     
     load_json(objects)
-
+    
     # fix embed escaping
     from gallery.models import VideoEmbed
     for obj in VideoEmbed.objects.all():
