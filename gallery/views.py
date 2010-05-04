@@ -8,6 +8,8 @@ from content.filters import IntervalOrderFilterSet
 from content.generic.views import GenericObjectDetail, GenericObjectList 
 from gallery.models import Gallery, GalleryItem
 
+from photologue.models import PhotoSize
+
 def galleryimage_response(context):
     template = "gallery/ajax/galleriffic_galleryimage.html"
     return render_to_string(template, context)
@@ -15,11 +17,31 @@ def galleryimage_response(context):
 def videoembed_response(context):
     template = "gallery/ajax/galleriffic_videoembed.html"
     result = render_to_string(template, context)
-    result = re.sub('width=".{0,4}"', 'width="606"', result)
-    result = re.sub('height=".{0,4}"', 'height="340"', result)
+
+    try:
+        photosize = context['object'].get_videoembed_large_photosize()
+    except AttributeError:
+        return result
+        
+    result = re.sub('width=".{0,4}"', 'width="%s"' % photosize.width, result)
+    result = re.sub('height=".{0,4}"', 'height="%s"' % photosize.height, result)
     return result
     
 def videofile_response(context):
+    # grab a photosize and fallback to default if not available
+    try:
+        photosize = context['object'].get_videofile_large_photosize()
+        width = photosize.width
+        height = photosize.height
+    except AttributeError:
+        # TODO: get some better way to specify defaults
+        width = 500
+        height = 300
+   
+    context.update({
+        'width': width,
+        'height': height,
+    })
     template = "gallery/ajax/galleriffic_videofile.html"
     return render_to_string(template, context)
 
