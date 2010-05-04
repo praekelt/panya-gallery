@@ -6,7 +6,7 @@
 	    <p class="thumbs_prev"></p>
 		<ul class="thumbs">
             {% for item in object.get_items %}
-		        <li><a class="thumb" src="{% url gallery_item_ajax_galleriffic item.slug %}" href="{{ item.get_gallery_large_url }}"><img src="{{ item.get_gallery_small_url }}" width="60" height="60" /><span></span></a></li>
+		        <li><a class="thumb" src="{% url gallery_item_ajax_galleriffic item.slug %}" href="{{ item.get_galleryimage_large_url }}"><img src="{{ item.get_galleryitem_thumbnail_url }}" width="60" height="60" /><span></span></a></li>
             {% endfor %}
 		</ul>
 		<p class="thumbs_next"></p>
