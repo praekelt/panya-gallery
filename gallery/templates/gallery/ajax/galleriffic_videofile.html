@@ -1,0 +1,15 @@
+<a href="{{ object.file.url }}"	style="display:block;width:{{ width }}px;height:{{ height }}px;" id="{{ object.id }}_player"></a>
+<script type="text/javascript" src="/media/gallery/js/flowplayer-3.2.0.min.js"></script>
+<script type="text/javascript">
+    flowplayer("{{ object.id }}_player", "/media/gallery/flash/flowplayer-3.1.5.swf",
+    {
+	plugins: {
+		controls: {
+			url: '/media/gallery/flash/flowplayercontrols-3.1.5.swf'
+		} 
+	},
+	clip: {
+    	autoPlay: false
+    }
+});
+</script>
