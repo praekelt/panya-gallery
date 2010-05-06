@@ -100,7 +100,6 @@ class ObjectDetail(GenericObjectDetail):
             )
         else:
             extra_context = added_context
-
         return extra_context
     
     def get_filterset(self, request, queryset):
