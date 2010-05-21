@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.template.loader import render_to_string
 
-from content.filters import IntervalOrderFilterSet
 from content.generic.views import GenericObjectDetail, GenericObjectList 
+from content.pagemenus import ContentPageMenu
 from gallery.models import Gallery, GalleryItem
 
 from photologue.models import PhotoSize
@@ -76,8 +76,8 @@ class ObjectList(GenericObjectList):
 
         return extra_context
     
-    def get_filterset(self, request, queryset):
-        return IntervalOrderFilterSet(request.GET, queryset=queryset)
+    def get_pagemenu(self, request, queryset, *args, **kwargs):
+        return ContentPageMenu(queryset, request)
     
     def get_paginate_by(self):
         return 12
@@ -88,7 +88,7 @@ class ObjectList(GenericObjectList):
 object_list = ObjectList()
 
 class ObjectDetail(GenericObjectDetail):
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         return Gallery.permitted.all()
     
     def get_extra_context(self, *args, **kwargs):
@@ -102,7 +102,7 @@ class ObjectDetail(GenericObjectDetail):
             extra_context = added_context
         return extra_context
     
-    def get_filterset(self, request, queryset):
-        return IntervalOrderFilterSet(request.GET, queryset=queryset, action_url=reverse('gallery_object_list'))
+    def get_pagemenu(self, request, queryset, *args, **kwargs):
+        return ContentPageMenu(queryset, request)
 
 object_detail = ObjectDetail()
