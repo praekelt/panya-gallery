@@ -27,17 +27,17 @@ class GalleryItem(ModelBase):
 
 class GalleryImage(GalleryItem):
     class Meta():
-        verbose_name = "Gallery Image"
-        verbose_name_plural = "Gallery Images"
+        verbose_name = "Gallery image"
+        verbose_name_plural = "Gallery images"
 
 class VideoEmbed(GalleryItem):
     embed = models.TextField()
     class Meta():
-        verbose_name = "Video Embed"
-        verbose_name_plural = "Video Embeds"
+        verbose_name = "Video embed"
+        verbose_name_plural = "Video embeds"
 
 class VideoFile(GalleryItem):
     file = models.FileField(upload_to='content/videofile')
     class Meta():
-        verbose_name = "Video File"
-        verbose_name_plural = "Video Files"
+        verbose_name = "Video file"
+        verbose_name_plural = "Video files"
