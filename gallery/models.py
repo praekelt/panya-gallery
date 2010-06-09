@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from content.models import ModelBase
+from panya.models import ModelBase
 
 class Gallery(ModelBase):
     class Meta():
