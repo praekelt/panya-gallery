@@ -4,9 +4,9 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.template.loader import render_to_string
 
-from content.generic.views import GenericObjectDetail, GenericObjectList 
-from content.pagemenus import ContentPageMenu
 from gallery.models import Gallery, GalleryItem
+from panya.generic.views import GenericObjectDetail, GenericObjectList 
+from panya.pagemenus import ContentPageMenu
 
 from photologue.models import PhotoSize
 
