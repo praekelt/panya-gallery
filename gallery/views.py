@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 
 from gallery.models import Gallery, GalleryItem
 from panya.generic.views import GenericObjectDetail, GenericObjectList 
-from panya.pagemenus import ContentPageMenu
+from panya.view_modifiers import ContentViewModifier
 
 from photologue.models import PhotoSize
 
