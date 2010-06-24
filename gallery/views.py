@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 
 from gallery.models import Gallery, GalleryItem
 from panya.generic.views import GenericObjectDetail, GenericObjectList 
-from panya.view_modifiers import ContentViewModifier
+from panya.view_modifiers import DefaultViewModifier
 
 from photologue.models import PhotoSize
 
@@ -65,24 +65,15 @@ def gallery_item_ajax_galleriffic(request, slug):
 
 class ObjectList(GenericObjectList):
     def get_extra_context(self, *args, **kwargs):
-        extra_context = super(ObjectList, self).get_extra_context(*args, **kwargs)
-        added_context = {'title': 'Galleries'}
-        if extra_context:
-            extra_context.update(
-                added_context,
-            )
-        else:
-            extra_context = added_context
+        return {'title': 'Galleries'}
+        
+    def get_view_modifier(self, request, *args, **kwargs):
+        return DefaultViewModifier(request, *args, **kwargs)
 
-        return extra_context
-    
-    def get_pagemenu(self, request, queryset, *args, **kwargs):
-        return ContentPageMenu(queryset, request)
-    
-    def get_paginate_by(self):
+    def get_paginate_by(self, *args, **kwargs):
         return 12
     
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         return Gallery.permitted.all()
 
 object_list = ObjectList()
@@ -92,17 +83,9 @@ class ObjectDetail(GenericObjectDetail):
         return Gallery.permitted.all()
     
     def get_extra_context(self, *args, **kwargs):
-        extra_context = super(ObjectDetail, self).get_extra_context(*args, **kwargs)
-        added_context = {'title': 'Galleries'}
-        if extra_context:
-            extra_context.update(
-                added_context,
-            )
-        else:
-            extra_context = added_context
-        return extra_context
+        return {'title': 'Galleries'}
     
-    def get_pagemenu(self, request, queryset, *args, **kwargs):
-        return ContentPageMenu(queryset, request)
-
+    def get_view_modifier(self, request, *args, **kwargs):
+        return DefaultViewModifier(request, base_url=reverse("gallery_object_list"), ignore_defaults=True, *args, **kwargs)
+    
 object_detail = ObjectDetail()
